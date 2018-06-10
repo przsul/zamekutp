@@ -13,9 +13,7 @@ var connection = mysql.createConnection({
 
 app.get('/rows', function (req, res) {
 
-  connection.query('SELECT * FROM persons', function(err, rows, fields)   
-  {  
-
+  connection.query('SELECT * FROM persons', function(err, rows, fields) {  
       if (err) throw err;  
 
       res.json(rows); 

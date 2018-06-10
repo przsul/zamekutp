@@ -1,25 +1,74 @@
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	<style>
+		.center-block {
+			justify-content:center
+		}
+	</style>
+</head>
 <body>
 
-<div ng-app="myApp" ng-controller="persons"> 
+<div ng-app="myApp" ng-controller="persons" class="container">
+	<div class="row center-block">
+		<div class="col-sm-8 mt-3">
+			<h1 class="text-center">Whitelist: {{persons.length+1}} persons</h1>
+		</div>
 
-<ul>
-  <li ng-repeat="x in myData">
-    {{ x.id + ', ' + x.last_name + ', ' + x.first_name}}
-  </li>
-</ul>
-
+		<div class="col-sm-7">
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text">Search:</span>
+			  </div>
+			  <input type="text" class="form-control" placeholder="e.g. Kowalski" aria-label="Username" aria-describedby="basic-addon1" ng-model="myFilter">
+			</div>
+			
+			<div class="table-responsive">
+				<table class="table table-hover">
+				    <thead>
+				      <tr>
+					<th>ID</th>
+					<th>Lastname</th>
+					<th>Firstname</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr ng-repeat="person in persons | filter:myFilter">
+					<td>{{person.id}}</td>
+					<td>{{person.last_name}}</td>
+					<td>{{person.first_name}}</td>
+				      </tr>
+				    </tbody>
+				  </table>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
-var app = angular.module('myApp', []);
-app.controller('persons', function($scope, $http) {
-  $http.get("http://localhost:3000/rows").then(function (response) {
-      $scope.myData = response.data;
-  });
-});
+	var app = angular.module('myApp', []);
+	app.controller('persons', function($scope, $http) {
+	  $http.get("http://localhost:3000/rows").then(function (response) {
+	      $scope.persons = response.data;
+	  });
+	});
 </script>
 
 </body>
