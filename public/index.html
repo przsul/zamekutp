@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="persons"> 
+
+<ul>
+  <li ng-repeat="x in myData">
+    {{ x.id + ', ' + x.last_name + ', ' + x.first_name}}
+  </li>
+</ul>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('persons', function($scope, $http) {
+  $http.get("http://localhost:3000/rows").then(function (response) {
+      $scope.myData = response.data;
+  });
+});
+</script>
+
+</body>
+</html>
+
