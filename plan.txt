@@ -1,8 +1,0 @@
-# Plan projektu
--tabela uprawnionych do wejscia
--tabela zapamietujaca wejscia
--podglad tabel przez przegladarke (i tu cza pomyslec zabezpieczone czy nie)
--robienie zapytan sql pytongiem
--przerobic program pytonga co czyta kody do naszych poczeb
-
--test

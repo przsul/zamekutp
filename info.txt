@@ -1,1 +1,0 @@
--trzeba uzyc nodejs v8.x zeby nie bylo warningow od mysql

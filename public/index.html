@@ -23,26 +23,35 @@
 		.center-block {
 			justify-content: center
 		}
+		i {
+			cursor: pointer;
+		}
 	</style>
 	<script>
 		$(document).ready(function () {
-			$.getJSON("http://localhost:3000/rows", function (result) {
-
-				$("#whitelistHeader").text("Whitelist: " + result.length + " persons");
+			$.getJSON("getData.php", function (result) {
+				var count = result.length;
+				$("#whitelistHeader").text("Whitelist: " + count + " persons");
 
 				$.each(result, function (i, field) {
 					$("#persons").append(
 						'<tr class="person">' + 
 						'<td>' + field.id + '</td><td>' + field.last_name + '</td>' + 
-						'<td>' + field.first_name + '</td><td class="text-center"><i class="fa fa-times-circle"></i></td>' +
+						'<td>' + field.first_name + '</td><td class="text-center"><i class="fa fa-times-circle" data-toggle="modal" data-target="#myModal"></i></td>' +
 						'</tr>');
 				});
+
 				$("i.fa").click(function() {
-    			$(this).closest("tr").remove();
+					if (confirm("Are you sure to delete this person?")) {
+						var personID = $(this).parent().prev().prev().prev().text();
+						var data = {id: personID};
+						$.post("deleteData.php", data); 
+						$(this).closest("tr").fadeOut("fast");
+						$("#whitelistHeader").text("Whitelist: " + --count + " persons");
+					}
 				});
+
 			});
-
-
 
 			$("#search").keyup(function () {
 				var value = $(this).val().toLowerCase();
@@ -86,6 +95,7 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
 
 </body>
