@@ -1,10 +1,8 @@
 <?php
 
+require 'dbAccess.php';
+
 $obj = $_POST["id"];
-$servername = "localhost";
-$username = "przemek";
-$password = "";
-$dbname = "zamekutp";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

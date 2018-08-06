@@ -2,10 +2,7 @@
 
 header("Content-Type: application/json; charset=UTF-8");
 
-$servername = "localhost";
-$username = "przemek";
-$password = "";
-$dbname = "zamekutp";
+require 'dbAccess.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
