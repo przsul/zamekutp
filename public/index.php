@@ -28,6 +28,7 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
+        <!-- Font Awesone -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!-- jQuery library -->
@@ -42,12 +43,21 @@
 	<style>
 		.center-block {
 			justify-content: center
-		}
+                }
+
 		i {
-			cursor: pointer;
-		}
+                        cursor: pointer;
+                } 
+
+                tr > td > i {
+                        opacity: 0;
+                }
+
+                tr:hover > td > i {
+                        opacity: 1;
+                }
 	</style>
-	<script>
+        <script>
 		$(document).ready(function () {
 			$.getJSON("getData.php", function (result) {
 				var count = result.length;
@@ -56,9 +66,11 @@
 				$.each(result, function (i, field) {
 					$("#persons").append(
 						'<tr class="person">' + 
-						'<td>' + field.id + '</td><td>' + field.last_name + '</td>' + 
-						'<td>' + field.first_name + '</td><td class="text-center"><i class="fa fa-times-circle" data-toggle="modal" data-target="#myModal"></i></td>' +
-						'</tr>');
+                                                '<td>' + field.id + '</td>' + 
+                                                '<td>' + field.last_name + '</td>' + 
+                                                '<td>' + field.first_name + '</td>' + 
+                                                '<td class="cross text-center"><i class="fa fa-times-circle"></i></td>' +
+                                                '</tr>');
 				});
 
 				$("i.fa").click(function() {
@@ -100,17 +112,32 @@
 					<input id="search" type="text" class="form-control" placeholder="e.g. Kowalski" aria-label="Username" aria-describedby="basic-addon1">
 				</div>
 
+<!-- Multiple inputs -->
+<form>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Person</span>
+    </div>
+    <input type="text" class="form-control" placeholder="Last Name">
+    <input type="text" class="form-control" placeholder="First Name">
+    <div class="input-group-append">
+      <button class="btn btn-success" type="submit">Add</button> 
+    </div>
+  </div>
+</form>
+
 				<div class="table-responsive">
 					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>Lastname</th>
-								<th>Firstname</th>
+								<th>Last name</th>
+								<th>First name</th>
 								<th style="color:red;text-align:center">DELETE</th>
 							</tr>
 						</thead>
-						<tbody id="persons"></tbody>
+                                                <tbody id="persons">
+</tbody>
 					</table>
 				</div>
 			</div>
