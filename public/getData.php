@@ -2,7 +2,7 @@
 
 header("Content-Type: application/json; charset=UTF-8");
 
-require 'dbAccess.php';
+require 'authConfig.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

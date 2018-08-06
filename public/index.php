@@ -1,3 +1,23 @@
+<?php
+
+  require 'authConfig.php';
+
+  $auth = false;
+  if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+      $_login = $_SERVER['PHP_AUTH_USER'];
+      $_pass = $_SERVER['PHP_AUTH_PW'];
+      if ($_login == $login && $_pass == $pass)
+              $auth = true;
+  }
+
+  if ($auth == false) {
+      header('WWW-Authenticate: Basic');
+      header('HTTP/1.0 401 Unauthorized');
+      echo "<b>Authentication failed. Refresh page for new access attempt.</b>";
+      exit;
+  } else { 
+?>     
+
 <!DOCTYPE html>
 <html>
 
@@ -101,3 +121,7 @@
 </body>
 
 </html>
+
+<?php
+}
+?>

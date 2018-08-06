@@ -1,6 +1,6 @@
 <?php
 
-require 'dbAccess.php';
+require 'authConfig.php';
 
 $obj = $_POST["id"];
 
