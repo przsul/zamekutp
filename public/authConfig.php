@@ -1,10 +1,10 @@
 <?php
 
 $servername = "localhost";
-$username = "root";
-$password = "vertrigo";
+$username = "pi";
+$password = "raspberry";
 $dbname = "zamekutp";
-$login = "admin";
-$pass = "admin";
+$login = "zamek";
+$pass = "zamek";
 
 ?>

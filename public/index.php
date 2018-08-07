@@ -60,22 +60,25 @@
         <script>
 		$(document).ready(function () {
 			$.getJSON("getData.php", function (result) {
-				var count = result.length;
-				$("#whitelistHeader").text("Whitelist: " + count + " persons");
-
+                                var count = result.length;
+                                if(count == 1)
+				        $("#whitelistHeader").text("Whitelist: " + count + " person");
+                                else
+        				$("#whitelistHeader").text("Whitelist: " + count + " persons");
 				$.each(result, function (i, field) {
 					$("#persons").append(
 						'<tr class="person">' + 
-                                                '<td>' + field.id + '</td>' + 
+                                                '<td>' + field.id + '</td>' +  
                                                 '<td>' + field.last_name + '</td>' + 
                                                 '<td>' + field.first_name + '</td>' + 
+                                                '<td>' + field.card_id + '</td>' + 
                                                 '<td class="cross text-center"><i class="fa fa-times-circle"></i></td>' +
                                                 '</tr>');
 				});
 
 				$("i.fa").click(function() {
 					if (confirm("Are you sure to delete this person?")) {
-						var personID = $(this).parent().prev().prev().prev().text();
+						var personID = $(this).parent().prev().prev().prev().prev().text();
 						var data = {id: personID};
 						$.post("deleteData.php", data); 
 						$(this).closest("tr").fadeOut("fast");
@@ -130,9 +133,10 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>ID</th>
+								<th>Database ID</th>
 								<th>Last name</th>
 								<th>First name</th>
+								<th>Card ID</th>
 								<th style="color:red;text-align:center">DELETE</th>
 							</tr>
 						</thead>

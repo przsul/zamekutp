@@ -11,7 +11,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 
-$sql = "SELECT id, first_name, last_name FROM persons";
+$sql = "SELECT * FROM persons";
 $result = $conn->query($sql);
 
 echo json_encode($result->fetch_all(MYSQLI_ASSOC));
