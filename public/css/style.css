@@ -1,0 +1,16 @@
+.center-block {
+   justify-content: center;
+}
+
+i {
+  cursor: pointer;
+}
+
+#delete {
+        color: red;
+        text-align: center;
+}
+
+tr:hover > td > i {
+    color: red !important;
+}

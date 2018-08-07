@@ -1,157 +1,104 @@
 <?php
+require 'authConfig.php';
 
-  require 'authConfig.php';
+$auth = false;
+if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+	$_login = $_SERVER['PHP_AUTH_USER'];
+	$_pass = $_SERVER['PHP_AUTH_PW'];
+	if ($_login == $login && $_pass == $pass) {
+		$auth = true;
+	}
+}
 
-  $auth = false;
-  if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
-      $_login = $_SERVER['PHP_AUTH_USER'];
-      $_pass = $_SERVER['PHP_AUTH_PW'];
-      if ($_login == $login && $_pass == $pass)
-              $auth = true;
-  }
-
-  if ($auth == false) {
-      header('WWW-Authenticate: Basic');
-      header('HTTP/1.0 401 Unauthorized');
-      echo "<b>Authentication failed. Refresh page for new access attempt.</b>";
-      exit;
-  } else { 
+if ($auth == false) {
+	header('WWW-Authenticate: Basic');
+	header('HTTP/1.0 401 Unauthorized');
+	echo "<b>Authentication failed. Refresh page for new access attempt.</b>";
+	exit;
+} else {
 ?>     
 
-<!DOCTYPE html>
-<html>
+	<!DOCTYPE html>
+	<html>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<!-- Latest compiled and minified Bootstrap4 CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
-        <!-- Font Awesone -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Font Awesone -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Own CSS -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<!-- Popper JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+		<!-- Popper JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 
-	<style>
-		.center-block {
-			justify-content: center
-                }
+		<!-- Latest compiled JavaScript for Bootstrap4-->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-		i {
-                        cursor: pointer;
-                } 
+		<!-- Own JS -->
+		<script src="js/script.js"></script>
+	</head>
 
-                tr > td > i {
-                        opacity: 0;
-                }
+	<body>
 
-                tr:hover > td > i {
-                        opacity: 1;
-                }
-	</style>
-        <script>
-		$(document).ready(function () {
-			$.getJSON("getData.php", function (result) {
-                                var count = result.length;
-                                if(count == 1)
-				        $("#whitelistHeader").text("Whitelist: " + count + " person");
-                                else
-        				$("#whitelistHeader").text("Whitelist: " + count + " persons");
-				$.each(result, function (i, field) {
-					$("#persons").append(
-						'<tr class="person">' + 
-                                                '<td>' + field.id + '</td>' +  
-                                                '<td>' + field.last_name + '</td>' + 
-                                                '<td>' + field.first_name + '</td>' + 
-                                                '<td>' + field.card_id + '</td>' + 
-                                                '<td class="cross text-center"><i class="fa fa-times-circle"></i></td>' +
-                                                '</tr>');
-				});
+		<div class="container">
+			<div class="row center-block">
+				<div class="col-sm-8 mt-3">
+					<h1 id="whitelistHeader" class="text-center"></h1>
+				</div>
 
-				$("i.fa").click(function() {
-					if (confirm("Are you sure to delete this person?")) {
-						var personID = $(this).parent().prev().prev().prev().prev().text();
-						var data = {id: personID};
-						$.post("deleteData.php", data); 
-						$(this).closest("tr").fadeOut("fast");
-						$("#whitelistHeader").text("Whitelist: " + --count + " persons");
-					}
-				});
+				<div class="col-sm-7">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Search:</span>
+						</div>
+						<input id="search" type="text" class="form-control" placeholder="e.g. Kowalski" aria-label="Username" aria-describedby="basic-addon1">
+					</div>
 
-			});
-
-			$("#search").keyup(function () {
-				var value = $(this).val().toLowerCase();
-				$("#persons tr").filter(function () {
-					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-				});
-			});
-
-		});
-	</script>
-</head>
-
-<body>
-
-	<div class="container">
-		<div class="row center-block">
-			<div class="col-sm-8 mt-3">
-				<h1 id="whitelistHeader" class="text-center"></h1>
-			</div>
-
-			<div class="col-sm-7">
+				<!-- Multiple inputs -->
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
-						<span class="input-group-text">Search:</span>
+						<span class="input-group-text">Person</span>
 					</div>
-					<input id="search" type="text" class="form-control" placeholder="e.g. Kowalski" aria-label="Username" aria-describedby="basic-addon1">
+					<input id="last_name" type="text" class="form-control" placeholder="Last Name">
+					<input id="first_name" type="text" class="form-control" placeholder="First Name">
+					<input id="card_id" type="text" class="form-control" placeholder="Card ID">
+					<div class="input-group-append">
+						<button class="btn btn-success" type="submit">Add</button> 
+					</div>
 				</div>
 
-<!-- Multiple inputs -->
-<form>
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text">Person</span>
-    </div>
-    <input type="text" class="form-control" placeholder="Last Name">
-    <input type="text" class="form-control" placeholder="First Name">
-    <div class="input-group-append">
-      <button class="btn btn-success" type="submit">Add</button> 
-    </div>
-  </div>
-</form>
-
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Database ID</th>
-								<th>Last name</th>
-								<th>First name</th>
-								<th>Card ID</th>
-								<th style="color:red;text-align:center">DELETE</th>
-							</tr>
-						</thead>
-                                                <tbody id="persons">
-</tbody>
-					</table>
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Database ID</th>
+									<th>Last name</th>
+									<th>First name</th>
+									<th>Card ID</th>
+									<th id="delete">DELETE</th>
+								</tr>
+							</thead>
+							<tbody id="persons">
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
+
 		</div>
 
-	</div>
+	</body>
 
-</body>
-
-</html>
+	</html>
 
 <?php
 }
