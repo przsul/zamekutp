@@ -1,26 +1,25 @@
 <?php
-require 'authConfig.php';
+	require 'authConfig.php';
 
-$auth = false;
-if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
-	$_login = $_SERVER['PHP_AUTH_USER'];
-	$_pass = $_SERVER['PHP_AUTH_PW'];
-	if ($_login == $login && $_pass == $pass) {
-		$auth = true;
+	$auth = false;
+	if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+		$_login = $_SERVER['PHP_AUTH_USER'];
+		$_pass = $_SERVER['PHP_AUTH_PW'];
+		if ($_login == $login && $_pass == $pass) {
+			$auth = true;
+		}
 	}
-}
 
-if ($auth == false) {
-	header('WWW-Authenticate: Basic');
-	header('HTTP/1.0 401 Unauthorized');
-	echo "<b>Authentication failed. Refresh page for new access attempt.</b>";
-	exit;
-} else {
+	if ($auth == false) {
+		header('WWW-Authenticate: Basic');
+		header('HTTP/1.0 401 Unauthorized');
+		echo "<b>Authentication failed. Refresh page for new access attempt.</b>";
+		exit;
+	} else {
 ?>     
 
-	<!DOCTYPE html>
-	<html>
-
+<!DOCTYPE html>
+<html>
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,16 +45,12 @@ if ($auth == false) {
 		<!-- Own JS -->
 		<script src="js/script.js"></script>
 	</head>
-
 	<body>
-
 		<div class="container">
 			<div class="row center-block">
-				<div class="col-sm-8 mt-3">
+				<div class="bg-white col-sm-7 sticky-top">
 					<h1 id="whitelistHeader" class="text-center"></h1>
-				</div>
 
-				<div class="col-sm-7">
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Search:</span>
@@ -63,43 +58,47 @@ if ($auth == false) {
 						<input id="search" type="text" class="form-control" placeholder="e.g. Kowalski" aria-label="Username" aria-describedby="basic-addon1">
 					</div>
 
-				<!-- Multiple inputs -->
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Person</span>
+					<!-- Multiple inputs -->
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Person</span>
+						</div>
+						<input id="last_name" type="text" class="form-control" placeholder="Last Name">
+						<input id="first_name" type="text" class="form-control" placeholder="First Name">
+						<input id="card_id" type="text" class="form-control" placeholder="Card ID">
+						<div class="input-group-append">
+							<button class="btn btn-success" type="submit">Add</button> 
+						</div>
 					</div>
-					<input id="last_name" type="text" class="form-control" placeholder="Last Name">
-					<input id="first_name" type="text" class="form-control" placeholder="First Name">
-					<input id="card_id" type="text" class="form-control" placeholder="Card ID">
-					<div class="input-group-append">
-						<button class="btn btn-success" type="submit">Add</button> 
-					</div>
-				</div>
 
-					<div class="table-responsive">
-						<table class="table table-hover">
-							<thead>
-								<tr>
+					<div>
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
 									<th>Database ID</th>
 									<th>Last name</th>
 									<th>First name</th>
 									<th>Card ID</th>
 									<th id="delete">DELETE</th>
-								</tr>
-							</thead>
-							<tbody id="persons">
-							</tbody>
+						 		</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-7">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<tbody id="persons"></tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 
 		</div>
-
 	</body>
-
-	</html>
+</html>
 
 <?php
-}
+	}
 ?>
