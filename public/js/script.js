@@ -6,7 +6,7 @@ $(document).ready(function() {
   $("#card_id").val("");
 
   $.getJSON("getData.php", function(result) {
-    var count = result.length;
+    count = result.length;
     if(count == 1)
       $("#whitelistHeader").text("Whitelist: " + count + " person");
     else
@@ -30,7 +30,11 @@ $(document).ready(function() {
         var data = {id: personID};
         $.post("deleteData.php", data); 
         $(this).closest("tr").fadeOut("fast");
-        $("#whitelistHeader").text("Whitelist: " + --count + " persons");
+        count = count-1;
+        if(count == 1)
+          $("#whitelistHeader").text("Whitelist: " + count + " person");
+        else
+          $("#whitelistHeader").text("Whitelist: " + count + " persons");
       }
     });
 
