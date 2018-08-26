@@ -14,7 +14,12 @@ if ($conn->connect_error)
     die("Connection failed: " . $conn->connect_error);
 
 $sql = "INSERT INTO persons VALUES(DEFAULT, '" . $_last_name . "', '" . $_first_name . "', '" . $_card_id . "');";
-$conn->query($sql);
+
+if($conn->query($sql))
+	echo '1';
+else
+	echo '0';
+
     
 $conn->close();
 

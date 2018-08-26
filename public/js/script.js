@@ -51,8 +51,11 @@ $(document).ready(function() {
       var _card_id = $("#card_id").val();
 
       var data = {last_name: _last_name, first_name: _first_name, card_id: _card_id};
-      $.post("addData.php", data, function() {
-        location.reload();
+      $.post("addData.php", data, function(result) {
+          if(result == '0')
+            alert("Person with UID: " + _card_id + ", already exist.");  
+
+            location.reload();
       }); 
     });
   });
