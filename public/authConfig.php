@@ -1,8 +1,8 @@
 <?php
 
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "pi";
+$password = "raspberry";
 $dbname = "zamekutp";
 $login = "zamek";
 $pass = "zamek";
