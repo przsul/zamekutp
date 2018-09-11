@@ -117,6 +117,7 @@ while continue_reading:
                 print "Person: unknown" 
                 print "UID: %s" % (uid_formatted)
                 print "Database ID: unknown\n"
+                buzzer.play(900, 5, 0.1, 0.1) 
         except mysql.connector.errors.ProgrammingError as e:
             print(e)
             sys.exit(1)
