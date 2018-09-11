@@ -29,6 +29,7 @@ import time
 import mysql.connector
 import os
 import Buzzer
+import authConfig 
 
 os.system("clear")
 
@@ -90,10 +91,10 @@ while continue_reading:
 
         try:
             db = mysql.connector.connect(
-                host="localhost",
-                user="pi",
-                passwd="raspberry",
-                database="zamekutp"
+                host=authConfig.hostname,
+                user=authConfig.username,
+                passwd=authConfig.password,
+                database=authConfig.db
             )
         except mysql.connector.errors.ProgrammingError as e:
             print(e)
